@@ -38,6 +38,7 @@ $(document).ready(function() {
      });
 
      soundManager.onready(function() {
+         console.debug("SOUNDMANAGER ACTIVE");
          pagesound = soundManager.createSound({
                url: audiourl
          });

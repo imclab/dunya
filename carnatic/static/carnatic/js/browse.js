@@ -453,3 +453,106 @@ function getResults(item){
     }
 
 
+var qartist = {{qartist}};
+var qinstr = {{qinstr}};
+var qraaga = {{qraaga}};
+var qtaala = {{qtaala}};
+var qconcert = {{qconcert}};
+$(document).ready(function() {
+    parseAllFilters({{ filter_items|safe }});
+
+    
+
+    // If we made a query, re-fill out the search
+    if (qartist.length) {
+        toggleCategory($("div#entitiesList .artist"), function() {
+            var thelist = $("div.entity_1 div.filterList ul li");
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = $(thelist[i]);
+                if (qartist.indexOf(theitem.data("id")) !== -1) {
+                    theitem.toggleClass("selected");
+                    getResults2(theitem, "eid1");
+                }
+            }
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = thelist[i];
+                if ($(theitem).hasClass("selected")) {
+                    theitem.offsetParent.scrollTop=theitem.offsetTop;
+                }
+            }
+        });
+        // Show artist bubble (minimised)
+    }
+    if (qconcert.length) {
+        toggleCategory($("div#entitiesList .concert"), function() {
+            var thelist = $("div.entity_2 div.filterList ul li");
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = $(thelist[i]);
+                if (qconcert.indexOf(theitem.data("id")) !== -1) {
+                    theitem.toggleClass("selected");
+                    getResults2(theitem, "eid2");
+                }
+            }
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = thelist[i];
+                if ($(theitem).hasClass("selected")) {
+                    theitem.offsetParent.scrollTop=theitem.offsetTop;
+                }
+            }
+        });
+    }
+    if (qinstr.length) {
+        toggleCategory($("div#entitiesList .instrument"), function() {
+            var thelist = $("div.entity_3 div.filterList ul li");
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = $(thelist[i]);
+                if (qinstr.indexOf(theitem.data("id")) !== -1) {
+                    theitem.toggleClass("selected");
+                    getResults2(theitem, "eid3");
+                }
+            }
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = thelist[i];
+                if ($(theitem).hasClass("selected")) {
+                    theitem.offsetParent.scrollTop=theitem.offsetTop;
+                }
+            }
+        });
+    }
+    if (qraaga.length) {
+        toggleCategory($("div#entitiesList .raaga"), function() {
+            var thelist = $("div.entity_4 div.filterList ul li");
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = $(thelist[i]);
+                if (qraaga.indexOf(theitem.data("id")) !== -1) {
+                    theitem.toggleClass("selected");
+                    getResults2(theitem, "eid4");
+                }
+            }
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = thelist[i];
+                if ($(theitem).hasClass("selected")) {
+                    theitem.offsetParent.scrollTop=theitem.offsetTop;
+                }
+            }
+        });
+    }
+    if (qtaala.length) {
+        toggleCategory($("div#entitiesList .taala"), function() {
+            var thelist = $("div.entity_5 div.filterList ul li");
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = $(thelist[i]);
+                if (qtaala.indexOf(theitem.data("id")) !== -1) {
+                    theitem.toggleClass("selected");
+                    getResults2(theitem, "eid5");
+                }
+            }
+            for (var i = 0; i < thelist.length; i++) {
+                var theitem = thelist[i];
+                if ($(theitem).hasClass("selected")) {
+                    theitem.offsetParent.scrollTop=theitem.offsetTop;
+                }
+            }
+        });
+    }
+});

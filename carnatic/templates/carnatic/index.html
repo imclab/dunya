@@ -4,111 +4,13 @@
 {% load staticfiles %}
 
 {% block script %}
-<script>
-var qartist = {{qartist}};
-var qinstr = {{qinstr}};
-var qraaga = {{qraaga}};
-var qtaala = {{qtaala}};
-var qconcert = {{qconcert}};
-$(document).ready(function() {
-    parseAllFilters({{ filter_items|safe }});
-
-    // If we made a query, re-fill out the search
-    if (qartist.length) {
-        toggleCategory($("div#entitiesList .artist"), function() {
-            var thelist = $("div.entity_1 div.filterList ul li");
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = $(thelist[i]);
-                if (qartist.indexOf(theitem.data("id")) !== -1) {
-                    theitem.toggleClass("selected");
-                    getResults2(theitem, "eid1");
-                }
-            }
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = thelist[i];
-                if ($(theitem).hasClass("selected")) {
-                    theitem.offsetParent.scrollTop=theitem.offsetTop;
-                }
-            }
-        });
-        // Show artist bubble (minimised)
-    }
-    if (qconcert.length) {
-        toggleCategory($("div#entitiesList .concert"), function() {
-            var thelist = $("div.entity_2 div.filterList ul li");
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = $(thelist[i]);
-                if (qconcert.indexOf(theitem.data("id")) !== -1) {
-                    theitem.toggleClass("selected");
-                    getResults2(theitem, "eid2");
-                }
-            }
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = thelist[i];
-                if ($(theitem).hasClass("selected")) {
-                    theitem.offsetParent.scrollTop=theitem.offsetTop;
-                }
-            }
-        });
-    }
-    if (qinstr.length) {
-        toggleCategory($("div#entitiesList .instrument"), function() {
-            var thelist = $("div.entity_3 div.filterList ul li");
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = $(thelist[i]);
-                if (qinstr.indexOf(theitem.data("id")) !== -1) {
-                    theitem.toggleClass("selected");
-                    getResults2(theitem, "eid3");
-                }
-            }
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = thelist[i];
-                if ($(theitem).hasClass("selected")) {
-                    theitem.offsetParent.scrollTop=theitem.offsetTop;
-                }
-            }
-        });
-    }
-    if (qraaga.length) {
-        toggleCategory($("div#entitiesList .raaga"), function() {
-            var thelist = $("div.entity_4 div.filterList ul li");
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = $(thelist[i]);
-                if (qraaga.indexOf(theitem.data("id")) !== -1) {
-                    theitem.toggleClass("selected");
-                    getResults2(theitem, "eid4");
-                }
-            }
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = thelist[i];
-                if ($(theitem).hasClass("selected")) {
-                    theitem.offsetParent.scrollTop=theitem.offsetTop;
-                }
-            }
-        });
-    }
-    if (qtaala.length) {
-        toggleCategory($("div#entitiesList .taala"), function() {
-            var thelist = $("div.entity_5 div.filterList ul li");
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = $(thelist[i]);
-                if (qtaala.indexOf(theitem.data("id")) !== -1) {
-                    theitem.toggleClass("selected");
-                    getResults2(theitem, "eid5");
-                }
-            }
-            for (var i = 0; i < thelist.length; i++) {
-                var theitem = thelist[i];
-                if ($(theitem).hasClass("selected")) {
-                    theitem.offsetParent.scrollTop=theitem.offsetTop;
-                }
-            }
-        });
-    }
-});
-</script>
-
-<script src="{% static 'carnatic/js/browse.js' %}"></script>
+<script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+<script src="http://builds.emberjs.com/release/ember.js"></script>
+<script src="http://builds.emberjs.com/tags/v1.0.0-beta.5/ember-data.js"></script>
+<!--<script src="http://builds.emberjs.com/canary/ember.js"></script>
+<script src="http://builds.emberjs.com/canary/ember-data.js"></script> -->
+<!-- <script src="{% static 'carnatic/js/browse.js' %}"></script> -->
+<script src="{% static 'carnatic/js/application.js' %}"></script>
 {% endblock %}
 {% block extra_css %}
     {% if debug %}
@@ -130,13 +32,32 @@ $(document).ready(function() {
 
 {% block wrap %}
 
+<script type="text/x-handlebars" data-template-name="home">
 <div class="main-container">
-
     <div id="filterMask">
         <div id="filterArea">
-
             <div id="entitiesList" class="filterList">
-                <ul></ul>
+                <ul id="select-list">
+                    {% verbatim %}
+                    {{#each itemController="select"}}
+                    <li {{bind-attr class="entity selected:selected"}}>
+                    <div class="colorCode shadow1"></div>{{name}}</li>
+                    {{/each}}
+                    {% endverbatim %}
+                </ul>
+            </div>
+
+            <div id="filterModel" class="filters raaga">
+                <div class="filterBall shadow1">
+                    <span>Raaga</span>
+                    <div class="arrow"></div>
+                    <div class="filterSummary shadow1"></div>
+                    <div class="closeFilter"></div><div class="resizeFilter"></div>
+                </div>
+                <!--<div class="formFilter"></div>-->
+                <div class="filterList filterGlobalList">
+                    <ul><li data-id="1">Ābhēri</li><li data-id="2">Ābhōgi</li><li data-id="199">Āhir bhairav</li><li data-id="134">Āhiri</li><li data-id="251">Amṛtavāhiṇi</li><li data-id="111">Amṛtavarṣiṇi</li><li data-id="141">Ānandabhairavi</li><li data-id="148">Āndōḷika</li><li data-id="4">Ārabhi</li><li data-id="5">Asāvēri</li><li data-id="6">Aṭāna</li><li data-id="102">Bāgēśrī</li><li data-id="7">Bahudāri</li><li data-id="213">Balahaṁsa</li><li data-id="110">Bauḷi</li><li data-id="8">Bēgaḍa</li><li data-id="9">Behāg</li><li data-id="10">Bhairavi</li><li data-id="74">Bhavāni</li><li data-id="252">Bhāvapriya</li><li data-id="76">Bhīmpalāsi</li><li data-id="178">Bhōga sāvēri</li><li data-id="245">Bhūpāḷaṁ</li><li data-id="189">Bhūṣāvaḷi</li><li data-id="11">Bilahari</li><li data-id="185">Bṛndāvana sāranga</li><li data-id="65">Bṛndāvani</li><li data-id="253">Budamanōhari</li><li data-id="94">Cakravākaṁ</li><li data-id="222">Candrajyōti</li><li data-id="183">Candrakauns</li><li data-id="62">Carturdaśa rāgamālika</li><li data-id="232">Cārukēśi</li><li data-id="192">Cāyānāṭa</li><li data-id="132">Cāyātarangiṇi</li><li data-id="115">Cencu kāmbhōji</li><li data-id="104">Cintāmaṇi</li><li data-id="223">Cittaranjani</li></ul> 
+                </div>
             </div>
 
             <div id="breadcrumb">
@@ -177,6 +98,7 @@ $(document).ready(function() {
          <h2 class="resultsTitle">Some items from our collection:</h2>
      {% endif %}
      <div id="searchresults">
+         {% comment %}
         {% for type, item in results %}
             {% if type == "concert" %}
                 {% badge_concert item %}
@@ -190,7 +112,9 @@ $(document).ready(function() {
                 {% badge_taala item %}
             {% endif %}
         {% endfor %}
+        {% endcomment %}
      </div>
     </div>
+</script>
 
 {% endblock %}
